@@ -22,7 +22,11 @@ def install_requirements(c):
 @task
 def model_setup(c):
     try:
-        c.run("python3 Dataset/modelcreation.py")
+        # comment 1 for testing, for proper working comment 2
+        # c.run("python3 Dataset/modelcreation.py")
+        c.run("python3 Dataset/_modelcreation.py")
+        print("model set up successfully.")
+
     except:
         print("failure in sqlalchamy model initializer")
 
@@ -30,7 +34,14 @@ def model_setup(c):
 @task
 def dataset_loader(c):
     try:
-        c.run("python3 Dataset/datasetloader.py ")
+        """
+        this function will be used in the dataset insertion to the database, using sqlalchamy model validation.
+        inv dataset-loader
+        """
+        # comment 1 for testing, for proper working comment 2
+        # c.run("python3 Dataset/modelcreation.py")
+        # c.run("python3 Dataset/datasetloader.py")
+        c.run("python3 Dataset/_datasetloader.py")
         print("=====DATABASE LOADED.=======")
     except:
         print("failure in dataset loader")
@@ -39,6 +50,10 @@ def dataset_loader(c):
 @task
 def runserver(c):
     try:
+        """
+        for running the fastapi app on the server.
+        inv runserver
+        """
         c.run("python3 main.py")
     except:
         print("failure in staring server.")

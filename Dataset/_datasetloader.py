@@ -5,8 +5,9 @@ from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 import os
 from sqlalchemy.ext.declarative import declarative_base
-from modelcreation import Planning, Base
+from _modelcreation import Planning, Base
 import time
+import traceback
 
 session = None  # making ession None initially to handle the exception.
 
@@ -37,8 +38,13 @@ try:
         )
         record["endDate"] = datetime.strptime(record["endDate"], "%m/%d/%Y %I:%M %p")
 
+        print("====here")
+        print(record)
         # validating each record.
         db_record = Planning(**record)
+        print("==after")
+        print(db_record)
+        time.sleep(10)
         # adding each record.
         session.add(db_record)
 
@@ -46,6 +52,8 @@ try:
     session.close()  # closing session.
     print("Data imported successfully.")
 except:
+    print("error at data importing into the database")
+    print(traceback.format_exc())
     # in case of failure make sure that our session is closed, so check if available then close.
     if session:
         session.close()
