@@ -23,8 +23,8 @@ class Skill(Base):
 
 
 engine = create_engine("sqlite:///test.db")
-Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(bind=engine)
+# Base.metadata.drop_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -49,6 +49,14 @@ try:
     session.commit()
     del skills_dict
     print("Data loaded successfully.")
+
+    person_obj = (
+        session.query(Person).join(Skill).filter(Skill.skill_name == "swim").all()
+    )
+    print("====", person_obj)
+    for person in person_obj:
+        print("a person who can swim are:", person.name)
+
 except Exception as e:
     print("Error:", e)
     print(traceback.format_exc())
