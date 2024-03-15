@@ -38,7 +38,15 @@ try:
         record["endDate"] = datetime.strptime(record["endDate"], "%m/%d/%Y %I:%M %p")
 
         # validating each record.
-        db_record = Planning(**record)
+        db_record = Planning(
+            id=record["id"],
+            originalId=record["originalId"],
+            bookingGrade=record["bookingGrade"],
+            operatingUnit=record["operatingUnit"],
+            industry=record["industry"],
+            isUnassigned=record["isUnassigned"],
+        )
+        print(db_record)
         # adding each record.
         session.add(db_record)
 

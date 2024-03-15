@@ -1,0 +1,30 @@
+[{
+  "id": 1,
+  "name": "Tanmay",
+  "skill_name": "runnning"
+},
+{
+  "id": 2,
+  "name": "herry",
+  "skill_name": "runnning"
+},
+{
+  "id": 3,
+  "name": "jerry",
+  "skill_name": "swim"
+},
+{
+  "id": 4,
+  "name": "perry",
+  "skill_name": "climbing"
+},
+{
+  "id": 5,
+  "name": "cherry",
+  "skill_name": ""
+},
+{
+  "id": 6,
+  "name": "lerry",
+  "skill_name": "swim"
+}] 
