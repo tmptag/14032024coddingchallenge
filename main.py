@@ -34,9 +34,18 @@ def get_db():
 
 @app.get("/planning/", response_model=List[PlanningP])
 async def get_all_planning_data(
-    skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
+    skip: int = Query(0, ge=0),
+    limit_per_page: int = Query(10, le=100),
+    sort_by: Optional[str] = Query(None, pattern=r"^[a-zA-Z_][a-zA-Z0-9_]*$"),
+    db: Session = Depends(get_db),
 ):
-    planning_data = db.query(Planning).offset(skip).limit(limit).all()
+    query = db.query(Planning)
+
+    if sort_by is not None:
+        query = query.order_by(getattr(Planning, sort_by))
+
+    planning_data = query.offset(skip).limit(limit_per_page).all()
+
     return planning_data
 
 
