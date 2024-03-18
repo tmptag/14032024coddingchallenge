@@ -16,7 +16,7 @@ try:
     Base = declarative_base()
 
     class Planning(Base):
-        __tablename__ = "planning"
+        __tablename__ = "plannings"
 
         # one primary key is going to connect with all the other tables/models
         id = Column(Integer, primary_key=True, index=True)
@@ -33,17 +33,15 @@ try:
         officePostalCode = Column(String, nullable=False)
 
         talent_id = Column(Integer, ForeignKey("talent.id"))
-        rskills_id = Column(Integer, ForeignKey("rskills.id"))
-        oskills_id = Column(Integer, ForeignKey("oskills.id"))
+        skill_id = Column(Integer, ForeignKey("skills.id"))
         client_id = Column(Integer, ForeignKey("client.id"))
         job_id = Column(Integer, ForeignKey("job.id"))
 
         # relationships established from both side.
-        talent = relationship("Talent", back_populates="planning")
-        rskills = relationship("Rskills", back_populates="planning")
-        oskills = relationship("Oskills", back_populates="planning")
-        client = relationship("Client", back_populates="planning")
-        job = relationship("Job", back_populates="planning")
+        talent = relationship("Talent", back_populates="plannings")
+        skills = relationship("Skills", back_populates="plannings")
+        client = relationship("Client", back_populates="plannings")
+        job = relationship("Job", back_populates="plannings")
 
     class Talent(Base):
         __tablename__ = "talent"
@@ -53,32 +51,25 @@ try:
         talentName = Column(String, nullable=True)
         talentGrade = Column(String, nullable=True)
 
-        planning = relationship("Planning", back_populates="talent")
+        plannings = relationship("Planning", back_populates="talent")
 
-    class Rskills(Base):
-        __tablename__ = "rskills"
-
-        id = Column(Integer, primary_key=True)
-        requiredSkills = Column(JSON, nullable=True)
-
-        planning = relationship("Planning", back_populates="rskills")
-
-    class Oskills(Base):
-        __tablename__ = "oskills"
+    class Skills(Base):
+        __tablename__ = "skills"
 
         id = Column(Integer, primary_key=True)
-        optionalSkills = Column(JSON, nullable=True)
+        name = Column(String, nullable=True)
+        category = Column(String, nullable=True)
 
-        planning = relationship("Planning", back_populates="oskills")
+        plannings = relationship("Planning", back_populates="skills")
 
     class Client(Base):
         __tablename__ = "client"
 
         id = Column(Integer, primary_key=True)
         clientName = Column(String, nullable=True)
-        clientId = Column(String, nullable=False)
+        clientId = Column(String, nullable=True)
 
-        planning = relationship("Planning", back_populates="client")
+        plannings = relationship("Planning", back_populates="client")
 
     class Job(Base):
         __tablename__ = "job"
@@ -87,7 +78,7 @@ try:
         jobManagerName = Column(String, nullable=True)
         jobManagerId = Column(String, nullable=True)
 
-        planning = relationship("Planning", back_populates="job")
+        plannings = relationship("Planning", back_populates="job")
 
 except:
     print("====Reason for model initialization failure are as follows====")

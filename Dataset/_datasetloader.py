@@ -5,11 +5,10 @@ from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 import os
 from sqlalchemy.ext.declarative import declarative_base
-from Dataset._modelcreation import (
+from _modelcreation import (
     Planning,
     Talent,
-    Rskills,
-    Oskills,
+    Skills,
     Client,
     Job,
     Base,
@@ -41,8 +40,7 @@ try:
     session = SessionLocal()
 
     talent_dict = {}
-    rskills_dict = {}
-    oskills_dict = {}
+    skills_dict = {}
     client_dict = {}
     job_dict = {}
 
@@ -54,13 +52,12 @@ try:
         )
         record["endDate"] = datetime.strptime(record["endDate"], "%m/%d/%Y %I:%M %p")
 
-        talentName = data["talentName"]
+        talentName = record["talentName"]
 
         if talentName not in talent_dict:
             _talent = Talent(
                 talentId=record["talentId"],
                 talentName=talentName,
-                talentName=record["talentName"],
                 talentGrade=record["talentGrade"],
             )
             session.add(_talent)
@@ -68,32 +65,86 @@ try:
         else:
             _talent = talent_dict[talentName]
 
-        requiredSkills = record["requiredSkills"]
+        # requiredSkills = tuple(
+        #     (skill["name"], skill["category"]) for skill in record["requiredSkills"]
+        # )
+        # print("requiredSkills", requiredSkills)
 
-        if requiredSkills not in rskills_dict:
-            _rskills = Rskills(requiredSkills=requiredSkills)
-            rskills_dict[requiredSkills] = _rskills
-            session.add(_rskills)
+        # if requiredSkills not in rskills_dict:
+        #     _rskills = Rskills(requiredSkills=requiredSkills)
+        #     rskills_dict[requiredSkills] = _rskills
+        #     session.add(_rskills)
+        # else:
+        #     _rskills = rskills_dict[requiredSkills]
+
+        # optionalSkills = tuple(
+        #     (skill["name"], skill["category"]) for skill in record["optionalSkills"]
+        # )
+
+        # if optionalSkills not in oskills_dict:
+        #     _oskills = Oskills(optionalSkills=optionalSkills)
+        #     oskills_dict[optionalSkills] = _oskills
+        #     session.add(_oskills)
+        # else:
+        #     _oskills = oskills_dict[optionalSkills]
+
+        if record["requiredSkills"]:
+            for value in record["requiredSkills"]:
+                name = value["name"]
+                if name not in skills_dict:
+                    _name = Skills(
+                        name=name,
+                        category=value["category"],
+                    )
+                    skills_dict[name] = _name
+                    session.add(_name)
+
+                else:
+                    _name = skills_dict[name]
+
         else:
-            _rskills = rskills_dict[requiredSkills]
+            name = None
 
-        optionalSkills = record["optionalSkills"]
+            if name not in skills_dict:
+                _name = Skills(name=None, category=None)
+                skills_dict[name] = _name
+                session.add(_name)
 
-        if optionalSkills not in oskills_dict:
-            _oskills = Oskills(optionalSkills=optionalSkills)
-            oskills_dict[optionalSkills] = _oskills
-            session.add(_oskills)
+            else:
+                _name = skills_dict[name]
+
+        if record["optionalSkills"]:
+            for value in record["optionalSkills"]:
+                name = value["name"]
+
+                if name not in skills_dict:
+                    _name = Skills(name=name, category=value["category"])
+                    skills_dict[name] = _name
+                    session.add(_name)
+                else:
+                    _name = skills_dict[name]
+
         else:
-            _oskills = oskills_dict["optionalSkills"]
+            name = None
+
+            if name not in skills_dict:
+                _name = Skills(name=None, category=None)
+                skills_dict[name] = _name
+                session.add(_name)
+
+            else:
+                _name = skills_dict[name]
+
         # ------
         clientName = record["clientName"]
+        print("=====", clientName, type(clientName))
 
         if clientName not in client_dict:
-            _client = Client(clientName=clientName)
-            client_dict[client_dict] = _client
-            session.add(_client)
+            client = Client(clientName=clientName)
+            client_dict[clientName] = client
+            session.add(client)
         else:
-            _client = client_dict[client_dict]
+            client = client_dict[clientName]
         # ------
 
         jobManagerName = record["jobManagerName"]
@@ -107,7 +158,7 @@ try:
         else:
             _job = job_dict[jobManagerName]
 
-        planning = Planning(
+        _planning = Planning(
             id=record["id"],
             originalId=record["originalId"],
             bookingGrade=record["bookingGrade"],
@@ -120,11 +171,12 @@ try:
             officeCity=record["officeCity"],
             officePostalCode=record["officePostalCode"],
             talent=_talent,
-            rskills=_rskills,
-            oskills=_oskills,
-            client=_client,
+            skills=_name,
+            client=client,
             job=_job,
         )
+
+        session.add(_planning)
 
     session.commit()
     session.close()  # closing session.
