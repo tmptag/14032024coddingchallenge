@@ -65,6 +65,7 @@ try:
         else:
             _talent = talent_dict[talentName]
 
+        skill_list = []
         if record["requiredSkills"]:
             for value in record["requiredSkills"]:
                 name = value["name"]
@@ -78,6 +79,8 @@ try:
 
                 else:
                     _name = skills_dict[name]
+
+                skill_list.append(_name)
 
         else:
             name = None
@@ -100,6 +103,8 @@ try:
                     session.add(_name)
                 else:
                     _name = skills_dict[name]
+
+                skill_list.append(_name)
 
         else:
             name = None
@@ -148,7 +153,7 @@ try:
             officeCity=record["officeCity"],
             officePostalCode=record["officePostalCode"],
             talent=_talent,
-            skills=_name,
+            skills=skill_list,
             client=client,
             job=_job,
         )

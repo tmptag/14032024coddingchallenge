@@ -1,9 +1,17 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
-from typing import Union
+from typing import Union, List
 
 # Note: incase of python's version issue try to run that with the union package of the python.
+
+
+# class PlanningSkill(BaseModel):
+#     planning_id: int
+#     skill_id: int
+
+#     class Config:
+#         orm_mode = True
 
 
 class TalentP(BaseModel):
@@ -28,6 +36,7 @@ class JobP(BaseModel):
 
 
 class PlanningP(BaseModel):
+    id: int
     originalId: str
     bookingGrade: Optional[str]
     operatingUnit: str
@@ -39,10 +48,10 @@ class PlanningP(BaseModel):
     officeCity: Optional[str]
     officePostalCode: str
     talent_id: int
-    skill_id: int
+    # skill_id: int
     client_id: int
     job_id: int
     talent: Union[TalentP, None] = None
-    skills: Union[SkillsP, None] = None
+    skills: Union[List[SkillsP], None] = None
     client: Union[ClientP, None] = None
     job: Union[JobP, None] = None

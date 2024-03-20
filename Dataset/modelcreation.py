@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
     Column,
+    Table,
     Integer,
     String,
     Float,
@@ -15,6 +16,13 @@ from sqlalchemy.orm import relationship
 
 try:
     Base = declarative_base()
+
+    planning_skill = Table(
+        "planning_skill",
+        Base.metadata,
+        Column("planning_id", ForeignKey("plannings.id"), primary_key=True),
+        Column("skill_id", ForeignKey("skills.id"), primary_key=True),
+    )
 
     class Planning(Base):
         __tablename__ = "plannings"
@@ -34,13 +42,15 @@ try:
         officePostalCode = Column(String, nullable=False)
 
         talent_id = Column(Integer, ForeignKey("talent.id"))
-        skill_id = Column(Integer, ForeignKey("skills.id"))
+        # skill_id = Column(Integer, ForeignKey("skills.id"))
         client_id = Column(Integer, ForeignKey("client.id"))
         job_id = Column(Integer, ForeignKey("job.id"))
 
         # relationships established from both side.
         talent = relationship("Talent", back_populates="plannings")
-        skills = relationship("Skills", back_populates="plannings")
+        skills = relationship(
+            "Skills", secondary="planning_skill", back_populates="plannings"
+        )
         client = relationship("Client", back_populates="plannings")
         job = relationship("Job", back_populates="plannings")
 
@@ -61,7 +71,9 @@ try:
         name = Column(String, nullable=True)
         category = Column(String, nullable=True)
 
-        plannings = relationship("Planning", back_populates="skills")
+        plannings = relationship(
+            "Planning", secondary="planning_skill", back_populates="skills"
+        )
 
     class Client(Base):
         __tablename__ = "client"
