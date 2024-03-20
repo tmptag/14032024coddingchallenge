@@ -1,0 +1,21 @@
+key:bookingGrade: value:
+key:client: value:<__main__.Client object at 0x7f8d257c17c0>
+key:client_id: value:1
+key:endDate: value:2022-11-05 19:42:00
+key:id: value:1
+key:industry: value:Low technology
+key:isUnassigned: value:False
+key:job: value:<__main__.Job object at 0x7f8d257c1880>
+key:job_id: value:1
+key:metadata: value:MetaData()
+key:officeCity: value:Hamburg
+key:officePostalCode: value:97311
+key:operatingUnit: value:Operating Unit 3
+key:originalId: value:62d396e7
+key:registry: value:<sqlalchemy.orm.decl_api.registry object at 0x7f8d24c402b0>
+key:skill_id: value:1
+key:skills: value:<__main__.Skills object at 0x7f8d2579e490>
+key:startDate: value:2022-11-01 16:42:00
+key:talent: value:<__main__.Talent object at 0x7f8d2579efd0>
+key:talent_id: value:1
+key:totalHours: value:33.0

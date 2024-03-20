@@ -19,6 +19,7 @@ def install_requirements(c):
 
 
 # no-longer needed, as we are directly calling it from the any file ASAP.
+# we can use it latter in case we want to debug the alchemy model, if error occurs.
 @task
 def model_setup(c):
     try:

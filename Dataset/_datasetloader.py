@@ -65,29 +65,6 @@ try:
         else:
             _talent = talent_dict[talentName]
 
-        # requiredSkills = tuple(
-        #     (skill["name"], skill["category"]) for skill in record["requiredSkills"]
-        # )
-        # print("requiredSkills", requiredSkills)
-
-        # if requiredSkills not in rskills_dict:
-        #     _rskills = Rskills(requiredSkills=requiredSkills)
-        #     rskills_dict[requiredSkills] = _rskills
-        #     session.add(_rskills)
-        # else:
-        #     _rskills = rskills_dict[requiredSkills]
-
-        # optionalSkills = tuple(
-        #     (skill["name"], skill["category"]) for skill in record["optionalSkills"]
-        # )
-
-        # if optionalSkills not in oskills_dict:
-        #     _oskills = Oskills(optionalSkills=optionalSkills)
-        #     oskills_dict[optionalSkills] = _oskills
-        #     session.add(_oskills)
-        # else:
-        #     _oskills = oskills_dict[optionalSkills]
-
         if record["requiredSkills"]:
             for value in record["requiredSkills"]:
                 name = value["name"]
@@ -149,7 +126,7 @@ try:
 
         jobManagerName = record["jobManagerName"]
 
-        if jobManagerName not in client_dict:
+        if jobManagerName not in job_dict:
             _job = Job(
                 jobManagerName=jobManagerName, jobManagerId=record["jobManagerId"]
             )

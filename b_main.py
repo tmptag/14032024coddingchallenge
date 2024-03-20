@@ -43,15 +43,12 @@ async def get_planning(
         # person_obj = (
         #     query(Planning).join(Rskills).filter(Planning.rskills_id == Rskills.id).all()
         # )
-        # if isUnassigned is not None:
-        #     query = sorted_query.filter(Planning.isUnassigned == isUnassigned)
 
         if sort_by:
             query = db.query.order_by(getattr(Planning, sort_by))
             pagination_query = query.offset(skip_records).limit(records_in_one_page)
         else:
             pagination_query = db.query.offset(skip_records).limit(records_in_one_page)
-
 
         return pagination_query.all()
     finally:

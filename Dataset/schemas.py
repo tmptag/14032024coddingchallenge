@@ -1,12 +1,33 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
+from typing import Union
 
 # Note: incase of python's version issue try to run that with the union package of the python.
 
 
+class TalentP(BaseModel):
+    talentId: Optional[str]
+    talentName: Optional[str]
+    talentGrade: Optional[str]
+
+
+class SkillsP(BaseModel):
+    name: Optional[str]
+    category: Optional[str]
+
+
+class ClientP(BaseModel):
+    clientName: Optional[str]
+    clientId: Optional[str]
+
+
+class JobP(BaseModel):
+    jobManagerName: Optional[str]
+    jobManagerId: Optional[str]
+
+
 class PlanningP(BaseModel):
-    id: int
     originalId: str
     bookingGrade: Optional[str]
     operatingUnit: str
@@ -21,28 +42,7 @@ class PlanningP(BaseModel):
     skill_id: int
     client_id: int
     job_id: int
-
-
-class TalentP(BaseModel):
-    id: int
-    talentId: Optional[str]
-    talentName: Optional[str]
-    talentGrade: Optional[str]
-
-
-class SkillsP(BaseModel):
-    id: int
-    name: Optional[str]
-    category: Optional[str]
-
-
-class ClientP(BaseModel):
-    id: int
-    clientName: Optional[str]
-    clientId: Optional[str]
-
-
-class JobP(BaseModel):
-    id: int
-    jobManagerName: Optional[str]
-    jobManagerId: Optional[str]
+    talent: Union[TalentP, None] = None
+    skills: Union[SkillsP, None] = None
+    client: Union[ClientP, None] = None
+    job: Union[JobP, None] = None

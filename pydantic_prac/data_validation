@@ -1,0 +1,19 @@
+"""
+data validation, pydantic supports inbuilt data validation
+d2 is validated d3 is not
+Note: you should import EmailStr manually.
+      you should install the email validation one time.
+"""
+
+from pydantic import BaseModel, EmailStr
+
+
+class User(BaseModel):
+    email: EmailStr
+
+
+d2 = {"email": "example str"}
+d3 = {"email": "amusa@gmail.com"}
+person = User(**d2)
+
+print("==", person)

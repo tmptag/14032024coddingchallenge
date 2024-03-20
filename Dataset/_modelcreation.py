@@ -12,6 +12,7 @@ import traceback
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
+
 try:
     Base = declarative_base()
 
