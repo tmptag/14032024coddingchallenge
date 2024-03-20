@@ -25,7 +25,7 @@ def model_setup(c):
     try:
         # comment 1 for testing, for proper working comment 2
         # c.run("python3 Dataset/modelcreation.py")
-        c.run("python3 Dataset/_modelcreation.py")
+        c.run("python3 Dataset/modelcreation.py")
         print("model set up successfully.")
 
     except:
@@ -42,7 +42,7 @@ def dataset_loader(c):
         # comment 1 for testing, for proper working comment 2
         # c.run("python3 Dataset/modelcreation.py")
         # c.run("python3 Dataset/datasetloader.py")
-        c.run("python3 Dataset/_datasetloader.py")
+        c.run("python3 Dataset/datasetloader.py")
         print("=====DATABASE LOADED.=======")
     except:
         print("failure in dataset loader")

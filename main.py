@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Query, Depends
 from typing import List
 from Dataset.schemas import PlanningP
-from Dataset._modelcreation import Planning, Skills, Talent, Client, Job
+from Dataset.modelcreation import Planning, Skills, Talent, Client, Job
 from sqlalchemy import create_engine, or_
 from sqlalchemy.orm import sessionmaker
 import uvicorn
