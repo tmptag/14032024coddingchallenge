@@ -10,3 +10,7 @@ steps first time:
 
 steps for second time:
 1) inv runserver 
+
+
+reading reference 
+https://www.gormanalysis.com/blog/many-to-many-relationships-in-fastapi/
